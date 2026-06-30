@@ -3,27 +3,382 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Wyrd Distro - A curator of zines and books">
     <title>Wyrd Distro</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        h1 {
-            color: #333;
-        }
-        p {
-            color: #666;
+            font-family: 'Georgia', 'Garamond', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(26, 26, 46, 0.95);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #0f3460;
+        }
+
+        nav .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #e94560;
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #e94560;
+        }
+
+        /* Hero Section */
+        .hero {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #e94560;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #b8b8d1;
+            font-style: italic;
+        }
+
+        .hero-content .description {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            color: #d0d0d0;
+        }
+
+        /* CTA Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #e94560;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #d63452;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(233, 69, 96, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #e94560;
+            border: 2px solid #e94560;
+        }
+
+        .btn-secondary:hover {
+            background: #e94560;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* Coming Soon Section */
+        .coming-soon {
+            background: rgba(15, 52, 96, 0.4);
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+        }
+
+        .coming-soon .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .coming-soon h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #e94560;
+        }
+
+        .coming-soon p {
+            font-size: 1.1rem;
+            color: #b8b8d1;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .coming-soon-badge {
+            display: inline-block;
+            background: #e94560;
+            color: #fff;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* About Section */
+        .about {
+            padding: 3rem 2rem;
+        }
+
+        .about .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .about h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #e94560;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: #d0d0d0;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .about-features {
+            list-style: none;
+        }
+
+        .about-features li {
+            padding: 0.75rem 0;
+            color: #b8b8d1;
+            border-bottom: 1px solid rgba(233, 69, 96, 0.2);
+        }
+
+        .about-features li:before {
+            content: "✦ ";
+            color: #e94560;
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(26, 26, 46, 0.95);
+            padding: 2rem;
+            text-align: center;
+            border-top: 2px solid #0f3460;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links a {
+            color: #e94560;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #e0e0e0;
+        }
+
+        .footer-text {
+            color: #808080;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content .subtitle {
+                font-size: 1.2rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            nav .logo {
+                font-size: 1.3rem;
+            }
+
+            .coming-soon h2 {
+                font-size: 1.8rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to the Wyrd Distro's GitHub Page! <span aria-label="waving hand">👋</span></h1>
-    <p>This is where you'll find zines and books!</p>
-    <p>Visit my <a href="https://github.com/wyrddistrodoor" target="_blank" rel="noopener noreferrer">GitHub profile</a> for more projects.</p>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">⚡ WYRD</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Wyrd Distro</h1>
+            <p class="subtitle">Curator of Zines & Books</p>
+            <p class="description">
+                A space dedicated to independent publications, alternative perspectives, 
+                and the voices that challenge conventions.
+            </p>
+            <div class="cta-buttons">
+                <a href="https://github.com/wyrddistrodoor" class="btn btn-primary">Visit GitHub</a>
+                <a href="#about" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coming Soon Section -->
+    <section class="coming-soon">
+        <div class="container">
+            <span class="coming-soon-badge">Coming Soon</span>
+            <h2>Inventory Launching</h2>
+            <p>
+                We're building something special. Our curated collection of zines and books 
+                will be available here soon. Stay tuned for an exciting range of independent 
+                publications and unique finds.
+            </p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2>About Wyrd Distro</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        Wyrd Distro is a curator focused on bringing together independent voices, 
+                        unique perspectives, and alternative publications that might otherwise go unnoticed.
+                    </p>
+                    <p>
+                        We believe in the power of zines and books to inspire, educate, and challenge 
+                        conventional thinking. Whether you're looking for art, culture, technology, 
+                        or personal narratives, there's something here for you.
+                    </p>
+                </div>
+                <div>
+                    <ul class="about-features">
+                        <li>Curated independent publications</li>
+                        <li>Alternative voices & perspectives</li>
+                        <li>Art & culture focused</li>
+                        <li>Open source community</li>
+                        <li>Passionate about literature</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://github.com/wyrddistrodoor" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://wyrddistro.com" target="_blank" rel="noopener noreferrer">Website</a>
+            </div>
+            <p class="footer-text">© 2024 Wyrd Distro. Crafted with curiosity and care.</p>
+        </div>
+    </footer>
 </body>
 </html>
